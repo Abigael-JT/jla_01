@@ -215,17 +215,14 @@ public class RlpLogbackAppenderTest {
 		);
 		Assertions.assertEquals(1, messageList.size(), "messageList size not expected");
 
+		RFC5424Frame rfc5424Frame = new RFC5424Frame();
+		rfc5424Frame.load(new ByteArrayInputStream(messageList.getFirst()));
 
-		for (byte[] message : messageList) {
-			RFC5424Frame rfc5424Frame = new RFC5424Frame();
-			rfc5424Frame.load(new ByteArrayInputStream(message));
+		AtomicBoolean frameNext = new AtomicBoolean();
+		Assertions.assertDoesNotThrow( () -> {frameNext.set(rfc5424Frame.next());});
+		Assertions.assertTrue(frameNext.get());
 
-			AtomicBoolean frameNext = new AtomicBoolean();
-			Assertions.assertDoesNotThrow( () -> {frameNext.set(rfc5424Frame.next());});
-			Assertions.assertTrue(frameNext.get());
-
-			Assertions.assertEquals("test-system-ci", rfc5424Frame.structuredData.getValue(new SDVector("businessSystem@48577", "systemId")).toString());
-		}
+		Assertions.assertEquals("test-system-ci", rfc5424Frame.structuredData.getValue(new SDVector("businessSystem@48577", "systemId")).toString());
 
 
 		Assertions.assertEquals(1, openCount.get(), "openCount not expected");
@@ -275,17 +272,14 @@ public class RlpLogbackAppenderTest {
 		);
 		Assertions.assertEquals(1, messageList.size(), "messageList size not expected");
 
+		RFC5424Frame rfc5424Frame = new RFC5424Frame();
+		rfc5424Frame.load(new ByteArrayInputStream(messageList.getFirst()));
 
-		for (byte[] message : messageList) {
-			RFC5424Frame rfc5424Frame = new RFC5424Frame();
-			rfc5424Frame.load(new ByteArrayInputStream(message));
+		AtomicBoolean frameNext = new AtomicBoolean();
+		Assertions.assertDoesNotThrow( () -> {frameNext.set(rfc5424Frame.next());});
+		Assertions.assertTrue(frameNext.get());
 
-			AtomicBoolean frameNext = new AtomicBoolean();
-			Assertions.assertDoesNotThrow( () -> {frameNext.set(rfc5424Frame.next());});
-			Assertions.assertTrue(frameNext.get());
-
-            Assertions.assertTrue(rfc5424Frame.structuredData.getValue(new SDVector("businessSystem@48577", "systemId")).isStub);
-		}
+		Assertions.assertTrue(rfc5424Frame.structuredData.getValue(new SDVector("businessSystem@48577", "systemId")).isStub);
 
 		Assertions.assertEquals(1, openCount.get(), "openCount not expected");
 		Assertions.assertEquals(1, closeCount.get(), "closeCount not expected");
