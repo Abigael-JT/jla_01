@@ -320,7 +320,7 @@ public final class RlpLogbackAppender<E> extends UnsynchronizedAppenderBase<E> i
             this.enableSystemID = enableSystemID;
         }
         finally {
-            beanLock.lock();
+            beanLock.unlock();
         }
     }
 
@@ -331,7 +331,7 @@ public final class RlpLogbackAppender<E> extends UnsynchronizedAppenderBase<E> i
             this.systemID = systemID;
         }
         finally {
-            beanLock.lock();
+            beanLock.unlock();
         }
     }
 
