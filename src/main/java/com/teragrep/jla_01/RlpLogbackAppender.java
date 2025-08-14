@@ -49,7 +49,7 @@ public final class RlpLogbackAppender<E> extends UnsynchronizedAppenderBase<E> i
     private boolean rebindEnabled;
     private int rebindAmount;
     private boolean synchronizedAccess;
-    private Boolean enableSystemID;
+    private boolean enableSystemID;
     private String systemID;
 
 
